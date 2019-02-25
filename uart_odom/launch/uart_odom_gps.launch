@@ -1,0 +1,12 @@
+<launch>
+        <arg name="odom_topic" value="/gps_converter/odom" />
+
+    <node pkg="uart_odom" type="uart_odom" name="uart_odom" output="screen">
+        <remap from="~odom" to="$(arg odom_topic)" />
+
+            <rosparam command="load" file="$(find uart_odom)/config/uart_odom_config.yaml" />
+        <param name="work_mode" value="real-time" />
+        <param name="js_ctrl_mode" value="feedback" />
+	</node>
+
+</launch>

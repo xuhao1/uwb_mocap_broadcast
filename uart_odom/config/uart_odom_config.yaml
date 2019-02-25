@@ -1,0 +1,15 @@
+serial_port: "/dev/ttyUSB1"
+#baud_rate: 57600
+baud_rate: 3000000
+#baud_rate: 12000000
+odom_packet_id: 66
+read_timer_frequency: 10000
+send_timer_frequency: 1000
+serial_protocal_mode: 0 # 1=scan all packet, 0 = return when get packet
+test:
+    test_packet_id: 88
+    send_total: 10000
+    send_packet_size: 88
+debug:
+    m_debug_packet_info: 1
+    m_debug_protocal_info: 0

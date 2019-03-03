@@ -6,6 +6,4 @@
         <param name="work_mode" value="real-time" />
         <param name="js_ctrl_mode" value="feedback" />
     </node>
-    <node pkg="pos_vel_mocap" type="pos_vel_mocap" name="pos_vel_mocap" output="screen">
-    </node>
 </launch>

@@ -1,0 +1,26 @@
+# 
+# Definition of all trackable objects
+# Identifier corresponds to Trackable ID set in Tracking Tools
+#
+rigid_bodies:
+    '0':
+        pose: SwarmNode0/pose
+        pose2d: SwarmNode0/ground_pose
+        child_frame_id: body
+        parent_frame_id: world
+    '3':
+        pose: SwarmNode3/pose
+        pose2d: SwarmNode3/ground_pose
+        child_frame_id: body
+        parent_frame_id: world
+    '7':
+        pose: SwarmNode7/pose
+        pose2d: SwarmNode7/ground_pose
+        child_frame_id: body
+        parent_frame_id: world
+    '8':
+        pose: SwarmNode8/pose
+        pose2d: SwarmNode8/ground_pose
+        child_frame_id: body
+        parent_frame_id: world
+

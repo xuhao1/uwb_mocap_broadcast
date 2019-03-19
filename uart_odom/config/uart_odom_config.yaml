@@ -1,4 +1,4 @@
-serial_port: "/dev/ttyUSB0"
+serial_port: "/dev/ttyUWB"
 #baud_rate: 57600
 baud_rate: 921600
 #baud_rate: 12000000

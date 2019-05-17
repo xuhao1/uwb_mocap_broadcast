@@ -1,0 +1,55 @@
+# 
+# Definition of all trackable objects
+# Identifier corresponds to Trackable ID set in Tracking Tools
+#
+rigid_bodies:
+    '0':
+        pose: /swarm_mocap/SwarmNodePose0
+        pose2d: /swarm_mocap/SwarmNodePose0_ground
+        child_frame_id: body
+        parent_frame_id: world
+    '1':
+        pose: /swarm_mocap/SwarmNodePose1
+        pose2d: /swarm_mocap/SwarmNodePose1_ground
+        child_frame_id: body
+        parent_frame_id: world
+    '2':
+        pose: /swarm_mocap/SwarmNodePose2
+        pose2d: /swarm_mocap/SwarmNodePose2_ground
+        child_frame_id: body
+        parent_frame_id: world
+    '3':
+        pose: /swarm_mocap/SwarmNodePose3
+        pose2d: /swarm_mocap/SwarmNodePose3_ground
+        child_frame_id: body
+        parent_frame_id: world
+    '4':
+        pose: /swarm_mocap/SwarmNodePose4
+        pose2d: /swarm_mocap/SwarmNodePose4_ground
+        child_frame_id: body
+        parent_frame_id: world
+    '5':
+        pose: /swarm_mocap/SwarmNodePose5
+        pose2d: /swarm_mocap/SwarmNodePose5_ground
+        child_frame_id: body
+        parent_frame_id: world
+    '6':
+        pose: /swarm_mocap/SwarmNodePose6
+        pose2d: /swarm_mocap/SwarmNodePose6_ground
+        child_frame_id: body
+        parent_frame_id: world
+    '7':
+        pose: /swarm_mocap/SwarmNodePose7
+        pose2d: /swarm_mocap/SwarmNodePose7_ground
+        child_frame_id: body
+        parent_frame_id: world
+    '8':
+        pose: /swarm_mocap/SwarmNodePose8
+        pose2d: /swarm_mocap/SwarmNodePose8_ground
+        child_frame_id: body
+        parent_frame_id: world
+    '9':
+        pose: /swarm_mocap/SwarmNodePose9
+        pose2d: /swarm_mocap/SwarmNodePose9_ground
+        child_frame_id: body
+        parent_frame_id: world

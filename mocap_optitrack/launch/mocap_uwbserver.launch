@@ -1,0 +1,22 @@
+<launch> 
+  <node pkg="mocap_optitrack"
+    type="mocap_node"
+    name="mocap_node"
+    respawn="false"
+    launch-prefix=""
+    required="true" output="log">
+    <rosparam file="$(find mocap_optitrack)/config/mocap.yaml" command="load" />
+  </node>
+  <node pkg="inf_uwb_ros"
+        type="inf_uwb_ros_node"
+        name="uwb_node"
+        output="screen" />
+
+  <node pkg="mocap_optitrack"
+        type="ViconUWBServer.py"
+        name="Vicon2UWB"
+        respawn="false"
+        launch-prefix=""
+        required="true" output="screen">
+  </node>
+</launch>

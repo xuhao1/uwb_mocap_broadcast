@@ -1,0 +1,15 @@
+<launch> 
+
+  <node pkg="inf_uwb_ros"
+        type="inf_uwb_ros_node"
+        name="uwb_node"
+        output="screen" />
+
+  <node pkg="mocap_optitrack"
+        type="UWBViconClient.py"
+        name="UWB2Vicon"
+        respawn="false"
+        launch-prefix=""
+        required="true" output="screen">
+  </node>
+</launch>

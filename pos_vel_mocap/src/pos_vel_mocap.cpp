@@ -5,12 +5,15 @@
 #include <nav_msgs/Odometry.h>
 #include <nav_msgs/Path.h>
 #include <ros/ros.h>
-#define IF_SUBTRACT_INIT 0
+#define IF_SUBTRACT_INIT 1
 using namespace std;
 using namespace Eigen;
 
 ros::Publisher pub_odom;
+ros::Publisher pub_odom_slow;
 ros::Publisher pub_path;
+
+int pose_count = 0;
 
 bool init_ok = false;
 
@@ -109,6 +112,10 @@ void pose_callback( const geometry_msgs::PoseStamped::ConstPtr msg )
         odom.twist.twist.linear.z = Vo0.z(); // now_vel.z();
         pub_odom.publish( odom );
 
+        if (pose_count ++ % 5 == 0) {
+            pub_odom_slow.publish( odom );
+        }
+
 
 //        ros::Duration delta_t = now_t - last_path_t;
 //        if ( delta_t.toSec() > 0.1 )
@@ -172,13 +179,19 @@ int main( int argc, char **argv )
 {
     ros::init( argc, argv, "pos_vel_mocap" );
     ros::NodeHandle n( "~" );
+    int self_id = 0;
+    n.param<int>("self_id", self_id, 1);
+    
+    char pose_topic[100] = {0};
+    sprintf(pose_topic, "/SwarmNode%d/pose", self_id);
+    ROS_INFO("Subscribe pose %s", pose_topic);
 
-    ros::Subscriber s1 = n.subscribe( "/Robot_1/pose", 100, pose_callback );
-    ros::Subscriber s2 =
-        n.subscribe( "/vins_estimator/odometry", 10, vins_callback );
+    ros::Subscriber s1 = n.subscribe(pose_topic , 100, pose_callback );
+    // ros::Subscriber s2 =
+        // n.subscribe( "/vins_estimator/odometry", 10, vins_callback );
 
-    pub_odom = n.advertise< nav_msgs::Odometry >( "odom_TA", 100 );
-    //pub_path = n.advertise< nav_msgs::Path >( "/mocap_path", 10 );
+    pub_odom_slow = n.advertise< nav_msgs::Odometry >( "/vins_estimator/odometry", 100 );
+    pub_odom = n.advertise< nav_msgs::Odometry >( "/vins_estimator/imu_propagate", 100 );
 
     ros::spin();
     return 0;

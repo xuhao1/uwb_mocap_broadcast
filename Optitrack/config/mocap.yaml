@@ -8,19 +8,28 @@ rigid_bodies:
         pose2d: SwarmNode0/ground_pose
         child_frame_id: body
         parent_frame_id: world
+    '1':
+        pose: SwarmNode1/pose
+        pose2d: SwarmNode1/ground_pose
+        child_frame_id: body
+        parent_frame_id: world
+    '2':
+        pose: SwarmNode2/pose
+        pose2d: SwarmNode2/ground_pose
+        child_frame_id: body
+        parent_frame_id: world
     '3':
         pose: SwarmNode3/pose
         pose2d: SwarmNode3/ground_pose
         child_frame_id: body
         parent_frame_id: world
-    '7':
-        pose: SwarmNode7/pose
-        pose2d: SwarmNode7/ground_pose
+    '4':
+        pose: SwarmNode4/pose
+        pose2d: SwarmNode4/ground_pose
         child_frame_id: body
         parent_frame_id: world
-    '8':
-        pose: SwarmNode8/pose
-        pose2d: SwarmNode8/ground_pose
+    '5':
+        pose: SwarmNode5/pose
+        pose2d: SwarmNode5/ground_pose
         child_frame_id: body
         parent_frame_id: world
-

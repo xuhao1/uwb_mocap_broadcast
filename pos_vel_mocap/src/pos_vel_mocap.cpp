@@ -48,55 +48,41 @@ void pose_callback( const geometry_msgs::PoseStamped & msg, int drone_id)
 void pose_callback( const geometry_msgs::PoseStamped::ConstPtr msg )
 {
     ROS_INFO_THROTTLE(1.0, "[POS_VEL] Pose from %d received", self_id);
-    poses_vicon[self_id] = Swarm::Pose(msg->pose);
+    Swarm::Pose pose(msg->pose);
 
-    if (!init_ok) {
-        poses_vicon_init[self_id] = Swarm::Pose(msg->pose);
-        printf("Init self pose");
-        poses_vicon_init[self_id].print();
-    }
+    poses_vicon[self_id] = pose;
+
 
     if ( !init_ok )
     {
         init_ok = true;
-        init_Q.w() = msg->pose.orientation.w;
-        init_Q.x() = msg->pose.orientation.x;
-        init_Q.y() = msg->pose.orientation.y;
-        init_Q.z() = msg->pose.orientation.z;
-        init_P.x() = msg->pose.position.x;
-        init_P.y() = msg->pose.position.y;
-        init_P.z() = msg->pose.position.z;
-        last_P = init_P;
-        last_Q = init_Q;
+        if(IF_SUBTRACT_INIT) {
+            last_P.setZero();
+            last_Q.setIdentity();
+        } else {
+            last_P = pose.pos();
+            last_Q = pose.att();
+        }
+
+        poses_vicon_init[self_id] = pose;
+        printf("Init self pose");
+        poses_vicon_init[self_id].print();
+
         last_odom_t = msg->header.stamp;
     }
     else
     {
         now_t = msg->header.stamp;
-
-        Eigen::Vector3d    now_P, P_w;
-        Eigen::Quaterniond now_Q, Q_w;
-        now_P.x() = msg->pose.position.x;
-        now_P.y() = msg->pose.position.y;
-        now_P.z() = msg->pose.position.z;
-        now_Q.w() = msg->pose.orientation.w;
-        now_Q.x() = msg->pose.orientation.x;
-        now_Q.y() = msg->pose.orientation.y;
-        now_Q.z() = msg->pose.orientation.z;
-
-        //std::cout << "x :" << msg->pose.position.x << "y:" << msg->pose.position.y
-        //          << " z :" << msg->pose.position.z << std::endl;
-        // Q_w = init_Q.normalized().toRotationMatrix().transpose() *
-        // now_Q.normalized().toRotationMatrix();
-        Q_w = now_Q.normalized().toRotationMatrix();
+        Swarm::Pose init_P = poses_vicon_init[self_id];
+        init_P.set_yaw_only();
+        
         if(IF_SUBTRACT_INIT)
         {
-            P_w = now_P - init_P;
+            pose = Swarm::Pose::DeltaPose(init_P, pose);
         }
-        else
-        {
-            P_w = now_P;
-        }
+
+        auto P_w = pose.pos();
+        auto Q_w = pose.att();
 
         Eigen::Vector3d now_vel;
 

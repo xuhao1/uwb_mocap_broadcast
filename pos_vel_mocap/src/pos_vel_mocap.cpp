@@ -187,14 +187,6 @@ void timer_callback(const ros::TimerEvent & e) {
         int _drone_id = it.first;
         auto _pose = it.second;
         auto base_coor_pose = Swarm::Pose::DeltaPose(self_init_pose, _pose, true);
-        // printf("self_init_pose : ");
-        // self_init_pose.print();
-
-        // printf("drone %d init_pose : ", _drone_id);
-        // _pose.print();
-        
-        // printf("basecoor of %d : ", _drone_id);
-        // base_coor_pose.print();
 
         geometry_msgs::Point p;
         p.x = base_coor_pose.pos().x();
@@ -218,6 +210,7 @@ void timer_callback(const ros::TimerEvent & e) {
     for (auto & it : poses_vicon) {
         int _drone_id = it.first;
         auto _pose = it.second;
+        _pose = Swarm::Pose::DeltaPose(self_init_pose, _pose, true);
 
         //Construct swarm_fused
         swarm_fused.ids.push_back(_drone_id);

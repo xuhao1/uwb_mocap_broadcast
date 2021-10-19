@@ -50,8 +50,10 @@ void pose_callback( const geometry_msgs::PoseStamped::ConstPtr msg )
     ROS_INFO_THROTTLE(1.0, "[POS_VEL] Pose from %d received", self_id);
     poses_vicon[self_id] = Swarm::Pose(msg->pose);
 
-    if (poses_vicon_init.find(self_id)==poses_vicon_init.end()) {
+    if (!init_ok) {
         poses_vicon_init[self_id] = Swarm::Pose(msg->pose);
+        printf("Init self pose");
+        poses_vicon_init[self_id].print();
     }
 
     if ( !init_ok )
@@ -172,8 +174,9 @@ void pose_callback( const geometry_msgs::PoseStamped::ConstPtr msg )
 
 void timer_callback(const ros::TimerEvent & e) {
     //Time to publish swarm stuffs..
-    if (poses_vicon.find(self_id)==poses_vicon.end()) {
+    if (poses_vicon.find(self_id)==poses_vicon.end() || !init_ok) {
         ROS_INFO_THROTTLE(1.0, "[POS_VEL] timer_callback wait for %d", self_id);
+        return;
     }
 
 
@@ -184,6 +187,15 @@ void timer_callback(const ros::TimerEvent & e) {
         int _drone_id = it.first;
         auto _pose = it.second;
         auto base_coor_pose = Swarm::Pose::DeltaPose(self_init_pose, _pose, true);
+        // printf("self_init_pose : ");
+        // self_init_pose.print();
+
+        // printf("drone %d init_pose : ", _drone_id);
+        // _pose.print();
+        
+        // printf("basecoor of %d : ", _drone_id);
+        // base_coor_pose.print();
+
         geometry_msgs::Point p;
         p.x = base_coor_pose.pos().x();
         p.y = base_coor_pose.pos().y();
